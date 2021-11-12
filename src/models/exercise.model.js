@@ -5,6 +5,7 @@ const Schema = mongoose.Schema;
 let ExerciseSchema = new Schema({
   title: { type: String },
   questionIds: { type: [String], required: true },
+  lessonId: { type: String, required: true },
   created_at: Date,
   updated_at: Date
 });

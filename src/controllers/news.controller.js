@@ -10,7 +10,8 @@ const createNews = catchAsync(async (req, res) => {
 });
 
 const getNewsList = catchAsync(async (req, res) => {
-    const filter = pick(req.query, ['name', 'role']);
+    // const filter = pick(req.query, ['name', 'role']);
+    const filter = {};
     const options = pick(req.query, ['sortBy', 'limit', 'page']);
     const result = await newsService.queryNews(filter, options);
     res.send(result);

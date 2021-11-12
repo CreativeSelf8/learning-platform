@@ -2,3 +2,6 @@ module.exports.authService = require('./auth.service');
 module.exports.emailService = require('./email.service');
 module.exports.tokenService = require('./token.service');
 module.exports.userService = require('./user.service');
+module.exports.exerciseService = require('./exercise.service');
+module.exports.learningService = require('./learning.service');
+module.exports.newsService = require('./news.service');
