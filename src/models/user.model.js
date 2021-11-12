@@ -11,15 +11,15 @@ const userSchema = mongoose.Schema(
       required: true,
       trim: true,
     },
-    email: {
+    phone: {
       type: String,
       required: true,
       unique: true,
       trim: true,
       lowercase: true,
       validate(value) {
-        if (!validator.isEmail(value)) {
-          throw new Error('Invalid email');
+        if (!validator.isMobilePhone(value)) {
+          throw new Error('Invalid phone number');
         }
       },
     },
@@ -40,10 +40,43 @@ const userSchema = mongoose.Schema(
       enum: roles,
       default: 'user',
     },
-    isEmailVerified: {
+    isPhoneVerified: {
       type: Boolean,
       default: false,
     },
+    birth: {
+      type: String,
+      default: false,
+    },
+    province: {
+      type: String,
+      default: false,
+    },
+    district: {
+      type: String,
+      default: false,
+    },
+    commune: {
+      type: String,
+      default: false,
+    },
+    address: {
+      type: String,
+      default: false,
+    },
+    class: {
+      type: String,
+      default: false,
+    },
+    gender: {
+      type: String,
+      enum: ["MEN", "FEMALE"],
+      default: false,
+    },
+    email: {
+      type: String,
+      default: false,
+    }
   },
   {
     timestamps: true,
@@ -55,13 +88,13 @@ userSchema.plugin(toJSON);
 userSchema.plugin(paginate);
 
 /**
- * Check if email is taken
- * @param {string} email - The user's email
+ * Check if phone is taken
+ * @param {string} phone - The user's phone
  * @param {ObjectId} [excludeUserId] - The id of the user to be excluded
  * @returns {Promise<boolean>}
  */
-userSchema.statics.isEmailTaken = async function (email, excludeUserId) {
-  const user = await this.findOne({ email, _id: { $ne: excludeUserId } });
+userSchema.statics.isPhoneTaken = async function (phone, excludeUserId) {
+  const user = await this.findOne({ phone, _id: { $ne: excludeUserId } });
   return !!user;
 };
 

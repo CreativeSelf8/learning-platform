@@ -1,0 +1,9 @@
+1: Nguoi dung request tao account 
+-> Admin kiem tra page Admin thi thay request va goi dien confirm
+-> Neu dong y su dung, sau khi nguoi dung thanh toan, Admin se kich hoat tai khoan
+-> Account ban dau co mat khau mac dinh la 12345678
+-> Account co the truy cap duoc du lieu toi da theo do tuoi hien tai. 
+
+2. Khi nguoi dung can request quen mat khau, se lien he voi Admin de reset(khong ton chi phi SMS)
+
+3.
