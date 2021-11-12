@@ -3,15 +3,15 @@ const { toJSON, paginate } = require('./plugins');
 const Schema = mongoose.Schema;
 
 let QuestionExamSchema = new Schema({
-  title: { type: String, required: true},
+  title: { type: String, required: true },
   multiChoices: { type: [String] },
-  answer: { type: String, required: true},
-  description: { type: String},
+  answer: { type: String, required: true },
+  description: { type: String },
   created_at: Date,
   updated_at: Date
 });
 
-QuestionExamSchema.pre('save', function(next) {
+QuestionExamSchema.pre('save', function (next) {
 
   var QuestionExam = this;
   // get the current date
@@ -21,7 +21,7 @@ QuestionExamSchema.pre('save', function(next) {
   QuestionExam.updated_at = currentDate;
 
   // if created_at doesn't exist, add to that field
-  if (!QuestionExam.created_at){
+  if (!QuestionExam.created_at) {
     QuestionExam.created_at = currentDate;
   }
 

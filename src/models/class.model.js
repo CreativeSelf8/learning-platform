@@ -10,7 +10,7 @@ let ClassSchema = new Schema({
   updated_at: Date
 });
 
-ClassSchema.pre('save', function(next) {
+ClassSchema.pre('save', function (next) {
 
   var Class = this;
   // get the current date
@@ -20,7 +20,7 @@ ClassSchema.pre('save', function(next) {
   Class.updated_at = currentDate;
 
   // if created_at doesn't exist, add to that field
-  if (!Class.created_at){
+  if (!Class.created_at) {
     Class.created_at = currentDate;
   }
 

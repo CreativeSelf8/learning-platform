@@ -11,7 +11,7 @@ let BlockSchema = new Schema({
   updated_at: Date
 });
 
-BlockSchema.pre('save', function(next) {
+BlockSchema.pre('save', function (next) {
 
   var Block = this;
   // get the current date
@@ -21,7 +21,7 @@ BlockSchema.pre('save', function(next) {
   Block.updated_at = currentDate;
 
   // if created_at doesn't exist, add to that field
-  if (!Block.created_at){
+  if (!Block.created_at) {
     Block.created_at = currentDate;
   }
 

@@ -6,4 +6,9 @@
 
 2. Khi nguoi dung can request quen mat khau, se lien he voi Admin de reset(khong ton chi phi SMS)
 
-3.
+
+- Đăng nhập, đăng xuất, reset mật khẩu (chỉ cho admin)
+- Thêm, sửa, xóa bài học
+- Thêm sửa, xóa bài tập
+- Thêm sửa, xóa tin tức x
+- Khi user đăng kí account, và thanh toán xong, admin approve account => enable account

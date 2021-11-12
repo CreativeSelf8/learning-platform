@@ -9,7 +9,7 @@ let LessonSchema = new Schema({
   updated_at: Date
 });
 
-LessonSchema.pre('save', function(next) {
+LessonSchema.pre('save', function (next) {
 
   var Lesson = this;
   // get the current date
@@ -19,7 +19,7 @@ LessonSchema.pre('save', function(next) {
   Lesson.updated_at = currentDate;
 
   // if created_at doesn't exist, add to that field
-  if (!Lesson.created_at){
+  if (!Lesson.created_at) {
     Lesson.created_at = currentDate;
   }
 

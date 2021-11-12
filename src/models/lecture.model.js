@@ -10,7 +10,7 @@ let LectureSchema = new Schema({
   updated_at: Date
 });
 
-LectureSchema.pre('save', function(next) {
+LectureSchema.pre('save', function (next) {
 
   var Lecture = this;
   // get the current date
@@ -20,7 +20,7 @@ LectureSchema.pre('save', function(next) {
   Lecture.updated_at = currentDate;
 
   // if created_at doesn't exist, add to that field
-  if (!Lecture.created_at){
+  if (!Lecture.created_at) {
     Lecture.created_at = currentDate;
   }
 

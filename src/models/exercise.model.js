@@ -9,7 +9,7 @@ let ExerciseSchema = new Schema({
   updated_at: Date
 });
 
-ExerciseSchema.pre('save', function(next) {
+ExerciseSchema.pre('save', function (next) {
 
   var Exercise = this;
   // get the current date
@@ -19,7 +19,7 @@ ExerciseSchema.pre('save', function(next) {
   Exercise.updated_at = currentDate;
 
   // if created_at doesn't exist, add to that field
-  if (!Exercise.created_at){
+  if (!Exercise.created_at) {
     Exercise.created_at = currentDate;
   }
 
