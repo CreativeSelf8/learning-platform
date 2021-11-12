@@ -32,7 +32,7 @@ module.exports = router;
 
 /**
  * @swagger
- * /Exercise:
+ * /exercise:
  *   post:
  *     summary: Create a Exercise
  *     description: Only admins can create other Exercise.
@@ -132,7 +132,7 @@ module.exports = router;
 
 /**
  * @swagger
- * /Exercise/{id}:
+ * /exercise/info/{id}:
  *   get:
  *     summary: Get a Exercise
  *     description: Authorized users can fetch exercise.
@@ -226,7 +226,11 @@ module.exports = router;
  *         $ref: '#/components/responses/Forbidden'
  *       "404":
  *         $ref: '#/components/responses/NotFound'
- * 
+ */
+ 
+ /**
+ *  @swagger
+ * /exercise/info/{id}:
  * patch:
  *     summary: Calculate score of a exercise
  *     description: Authorized users can request calculate exercise.

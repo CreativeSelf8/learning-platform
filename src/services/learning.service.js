@@ -106,16 +106,6 @@ const queryLesson = async (lectureId, userId) => {
 };
 
 /**
- * Query for lectures
- * @returns {Promise<QueryResult>}
- */
-const queryLesson = async (lectureIds) => {
-    const lessonData = await Lesson.find({ classId: { $in: lectureIds } });
-    return lessonData;
-};
-
-
-/**
  * Update Block by id
  * @param {ObjectId} blockId
  * @param {Object} updateBody

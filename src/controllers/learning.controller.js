@@ -69,6 +69,12 @@ const deleteLesson = catchAsync(async (req, res) => {
     res.status(httpStatus.NO_CONTENT).send();
 });
 
+
+const getLessons = catchAsync(async (req, res) => {
+    const lessonList = await learningService.queryLesson(req.params.lectureId, req.user._id);
+    res.send(lessonList);
+});
+
 module.exports = {
     createBlock,
     createClass,
@@ -82,5 +88,6 @@ module.exports = {
     deleteClass,
     deleteLecture,
     deleteLesson,
-    getStudyLevels
+    getStudyLevels,
+    getLessons
 };
