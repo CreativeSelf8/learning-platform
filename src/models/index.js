@@ -9,3 +9,5 @@ module.exports.Lecture = require('./lecture.model');
 module.exports.Lesson = require('./lesson.model');
 module.exports.News = require('./news.model');
 module.exports.QuestionExam = require('./questionExam.model');
+module.exports.UserProgress = require('./userProgress.model');
+module.exports.UserRequest = require('./userRequest.model');

@@ -5,7 +5,9 @@ const Schema = mongoose.Schema;
 let LectureSchema = new Schema({
   title: { type: String, required: true },
   thumbnail: { type: String, required: true },
+  classId: { type: String, required: true },
   lessonIds: { type: [String], required: true },
+  order: { type: Number, required: true },
   created_at: Date,
   updated_at: Date
 });
@@ -27,8 +29,8 @@ LectureSchema.pre('save', function (next) {
   next();
 });
 // add plugin that converts mongoose to json
-userSchema.plugin(toJSON);
-userSchema.plugin(paginate);
+LectureSchema.plugin(toJSON);
+LectureSchema.plugin(paginate);
 let Lecture = mongoose.model('Lecture', LectureSchema);
 
 module.exports = Lecture;

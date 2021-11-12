@@ -12,3 +12,5 @@
 - Thêm sửa, xóa bài tập x
 - Thêm sửa, xóa tin tức x
 - Khi user đăng kí account, và thanh toán xong, admin approve account => enable account
+
+Khối(Block) -> Lớp(class) -> lecture(môn học) -> Bài học (lesson) 

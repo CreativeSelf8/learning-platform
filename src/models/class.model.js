@@ -4,8 +4,10 @@ const Schema = mongoose.Schema;
 
 let ClassSchema = new Schema({
   title: { type: String, required: true },
+  blockId: { type: String, required: true },
   age: { type: Number, required: true },
   lectureIds: { type: [String], required: true },
+  order: { type: Number, required: true },
   created_at: Date,
   updated_at: Date
 });
