@@ -221,7 +221,6 @@ const deleteLessonById = async (lessonId) => {
  * @returns {Promise<QueryResult>}
  */
 const getStudyLevels = async (userId) => {
-    const user = User.findById(userId);
     const blocks = await queryBlock();
 
     let blockIds = blocks.map(obj => {
@@ -240,14 +239,15 @@ const getStudyLevels = async (userId) => {
             order: element.order,
             classes: []
         }
-        classes.filter(e => e.blockId === element._id)
+        classes.filter(e => e.blockId == element._id.toString())
             .sort((a, b) => (a.order > b.order) ? 1 : -1).forEach(classElement => {
+                console.log(classElement);
                 var classItem = {
                     classTitle: classElement.title,
                     order: classElement.order,
                     lectureList: []
                 }
-                lectureList.filter(e => e.classId === classElement._id)
+                lectureList.filter(e => e.classId === classElement._id.toString())
                     .sort((a, b) => (a.order > b.order) ? 1 : -1).forEach(lectureElement => {
                         var lectureItem = {
                             title: lectureElement.title,
