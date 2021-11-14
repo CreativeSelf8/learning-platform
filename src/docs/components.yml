@@ -119,6 +119,22 @@ components:
         order:
           type: number
 
+    UserRequest:
+      type: object
+      properties:
+        id:
+          type: string
+        phone:
+          type: string
+        birth:
+          type: string
+        address:
+          type: string
+        class:
+          type: string
+        supportDesc:
+          type: string
+
     AuthTokens:
       type: object
       properties:

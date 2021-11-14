@@ -7,7 +7,7 @@ let LectureSchema = new Schema({
   thumbnail: { type: String, required: true },
   classId: { type: String, required: true },
   lessonIds: { type: [String], required: true },
-  order: { type: Number, required: true, unique: true },
+  order: { type: Number, required: true },
   created_at: Date,
   updated_at: Date
 });

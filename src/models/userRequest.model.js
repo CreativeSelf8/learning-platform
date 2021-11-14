@@ -17,16 +17,16 @@ const UserRequestSchema = mongoose.Schema(
         },
         birth: {
             type: String,
-            default: false,
         },
         address: {
             type: String,
-            default: false,
         },
         class: {
             type: String,
-            default: false,
-        }
+        },
+        supportDesc: {
+            type: String,
+        },
     },
     {
         timestamps: true,

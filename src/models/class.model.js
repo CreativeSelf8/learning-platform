@@ -6,7 +6,7 @@ let ClassSchema = new Schema({
   title: { type: String, required: true },
   blockId: { type: String, required: true },
   lectureIds: { type: [String], required: true },
-  order: { type: Number, required: true, unique: true },
+  order: { type: Number, required: true },
   created_at: Date,
   updated_at: Date
 });

@@ -8,9 +8,24 @@ const register = catchAsync(async (req, res) => {
   res.status(httpStatus.CREATED).send({ user, tokens });
 });
 
+const requestUser = catchAsync(async (req, res) => {
+  const userRequest = await userService.requestUser(req.body);
+  res.status(httpStatus.CREATED).send({ userRequest });
+});
+
 const login = catchAsync(async (req, res) => {
   const { phone, password } = req.body;
   const user = await authService.loginUserWithPhoneAndPassword(phone, password);
+  const tokens = await tokenService.generateAuthTokens(user);
+  res.send({ user, tokens });
+});
+
+const adminLogin = catchAsync(async (req, res) => {
+  const { phone, password } = req.body;
+  const user = await authService.loginUserWithPhoneAndPassword(phone, password);
+  if (user.role !== 'admin') {
+    throw new ApiError(httpStatus.UNAUTHORIZED);
+  }
   const tokens = await tokenService.generateAuthTokens(user);
   res.send({ user, tokens });
 });
@@ -56,4 +71,6 @@ module.exports = {
   resetPassword,
   sendVerificationEmail,
   verifyEmail,
+  requestUser,
+  adminLogin
 };

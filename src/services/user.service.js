@@ -1,5 +1,5 @@
 const httpStatus = require('http-status');
-const { User } = require('../models');
+const { User, UserRequest } = require('../models');
 const ApiError = require('../utils/ApiError');
 
 /**
@@ -8,10 +8,29 @@ const ApiError = require('../utils/ApiError');
  * @returns {Promise<User>}
  */
 const createUser = async (userBody) => {
-  if (await User.isEmailTaken(userBody.email)) {
-    throw new ApiError(httpStatus.BAD_REQUEST, 'Email already taken');
+  if (await User.isPhoneTaken(userBody.phone)) {
+    throw new ApiError(httpStatus.BAD_REQUEST, 'Phone already taken');
   }
+  userBody.role = 'user';
   return User.create(userBody);
+};
+
+const requestUser = async (userBody) => {
+  if (await User.isPhoneTaken(userBody.phone)) {
+    throw new ApiError(httpStatus.BAD_REQUEST, 'Phone already taken');
+  }
+  await UserRequest.deleteMany({phone: userBody.phone});
+  return UserRequest.create(userBody);
+};
+
+const acceptRequest = async (body) => {
+  if (await User.isPhoneTaken(body.phone)) {
+    throw new ApiError(httpStatus.BAD_REQUEST, 'Phone already taken');
+  }
+  await UserRequest.deleteOne({_id: body.requestId});
+  const user = Object.assign(user, body);
+  user.role = 'user';
+  return UserRequest.create(user);
 };
 
 /**
@@ -26,6 +45,20 @@ const createUser = async (userBody) => {
 const queryUsers = async (filter, options) => {
   const users = await User.paginate(filter, options);
   return users;
+};
+
+/**
+ * Query for users
+ * @param {Object} filter - Mongo filter
+ * @param {Object} options - Query options
+ * @param {string} [options.sortBy] - Sort option in the format: sortField:(desc|asc)
+ * @param {number} [options.limit] - Maximum number of results per page (default = 10)
+ * @param {number} [options.page] - Current page (default = 1)
+ * @returns {Promise<QueryResult>}
+ */
+ const getListRequest = async (filter, options) => {
+  const requests = await UserRequest.paginate(filter, options);
+  return requests;
 };
 
 /**
@@ -57,8 +90,8 @@ const updateUserById = async (userId, updateBody) => {
   if (!user) {
     throw new ApiError(httpStatus.NOT_FOUND, 'User not found');
   }
-  if (updateBody.email && (await User.isEmailTaken(updateBody.email, userId))) {
-    throw new ApiError(httpStatus.BAD_REQUEST, 'Email already taken');
+  if (updateBody.phone && (await User.isPhoneTaken(updateBody.phone, userId))) {
+    throw new ApiError(httpStatus.BAD_REQUEST, 'Phone already taken');
   }
   Object.assign(user, updateBody);
   await user.save();
@@ -79,6 +112,25 @@ const deleteUserById = async (userId) => {
   return user;
 };
 
+const changePassword = async (oldPassword, newPassword, userId) => {
+  try {
+    const user = await userService.getUserById(userId);
+    if (!user) {
+      throw new Error();
+    }
+    if (user.role !== 'admin') {
+      let passwordMatch = await user.isPasswordMatch(oldPassword);
+      if (!passwordMatch) {
+        throw new ApiError(httpStatus.FORBIDDEN, 'Old password not match');
+      }
+    }
+
+    await userService.updateUserById(user.id, { password: newPassword });
+  } catch (error) {
+    throw new ApiError(httpStatus.UNAUTHORIZED, 'Password reset failed');
+  }
+};
+
 module.exports = {
   createUser,
   queryUsers,
@@ -86,4 +138,8 @@ module.exports = {
   getUserByPhone,
   updateUserById,
   deleteUserById,
+  changePassword,
+  requestUser,
+  acceptRequest,
+  getListRequest
 };

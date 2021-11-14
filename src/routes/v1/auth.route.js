@@ -6,8 +6,9 @@ const auth = require('../../middlewares/auth');
 
 const router = express.Router();
 
-//router.post('/register', validate(authValidation.register), authController.register);
+router.post('/request-user', validate(authValidation.requestUser), authController.requestUser);
 router.post('/login', validate(authValidation.login), authController.login);
+router.post('/admin/login', validate(authValidation.login), authController.adminLogin);
 router.post('/logout', validate(authValidation.logout), authController.logout);
 // router.post('/refresh-tokens', validate(authValidation.refreshTokens), authController.refreshTokens);
 // router.post('/forgot-password', validate(authValidation.forgotPassword), authController.forgotPassword);
@@ -26,9 +27,9 @@ module.exports = router;
 
 /**
  * @swagger
- * /auth/register:
+ * /auth/request-user:
  *   post:
- *     summary: Register as user
+ *     summary: Request creating a user
  *     tags: [Auth]
  *     requestBody:
  *       required: true
@@ -38,24 +39,21 @@ module.exports = router;
  *             type: object
  *             required:
  *               - name
- *               - email
- *               - password
+ *               - phone
+ *               - class
  *             properties:
  *               name:
  *                 type: string
- *               email:
+ *               phone:
  *                 type: string
- *                 format: email
- *                 description: must be unique
- *               password:
+ *               birth:
  *                 type: string
- *                 format: password
- *                 minLength: 8
- *                 description: At least one number and one letter
- *             example:
- *               name: fake name
- *               email: fake@example.com
- *               password: password1
+ *               address:
+ *                 type: string
+ *               class:
+ *                 type: string
+ *               supportDesc: 
+ *                 type: string
  *     responses:
  *       "201":
  *         description: Created
@@ -65,11 +63,9 @@ module.exports = router;
  *               type: object
  *               properties:
  *                 user:
- *                   $ref: '#/components/schemas/User'
- *                 tokens:
- *                   $ref: '#/components/schemas/AuthTokens'
+ *                   $ref: '#/components/schemas/UserRequest'
  *       "400":
- *         $ref: '#/components/responses/DuplicateEmail'
+ *         $ref: '#/components/responses/DuplicatePhone'
  */
 
 /**
@@ -90,7 +86,50 @@ module.exports = router;
  *             properties:
  *               phone:
  *                 type: string
- *                 format: phone
+ *               password:
+ *                 type: string
+ *                 format: password
+ *     responses:
+ *       "200":
+ *         description: OK
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 user:
+ *                   $ref: '#/components/schemas/User'
+ *                 tokens:
+ *                   $ref: '#/components/schemas/AuthTokens'
+ *       "401":
+ *         description: Invalid phone or password
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Error'
+ *             example:
+ *               code: 401
+ *               message: Invalid phone or password
+ */
+
+/**
+ * @swagger
+ * /auth/admin/login:
+ *   post:
+ *     summary: Login for Admin
+ *     tags: [Auth]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required:
+ *               - phone
+ *               - password
+ *             properties:
+ *               phone:
+ *                 type: string
  *               password:
  *                 type: string
  *                 format: password

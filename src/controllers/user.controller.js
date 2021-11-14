@@ -34,10 +34,32 @@ const deleteUser = catchAsync(async (req, res) => {
   res.status(httpStatus.NO_CONTENT).send();
 });
 
+
+const changePassword = catchAsync(async (req, res) => {
+  await userService.changePassword(req.body.oldPassword, req.body.newPassword, req.params.userId);
+  res.status(httpStatus.OK).send();
+});
+
+
+const getListRequest = catchAsync(async (req, res) => {
+  const filter = {};
+  const options = pick(req.query, ['sortBy', 'limit', 'page']);
+  const result = await userService.getListRequest(filter, options);
+  res.send(result);
+});
+
+const acceptRequest = catchAsync(async (req, res) => {
+  await userService.acceptRequest(req.body);
+  res.status(httpStatus.OK).send();
+});
+
 module.exports = {
   createUser,
   getUsers,
   getUser,
   updateUser,
   deleteUser,
+  changePassword,
+  getListRequest,
+  acceptRequest
 };

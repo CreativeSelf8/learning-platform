@@ -16,12 +16,6 @@ const userSchema = mongoose.Schema(
       required: true,
       unique: true,
       trim: true,
-      lowercase: true,
-      validate(value) {
-        if (!validator.isMobilePhone(value)) {
-          throw new Error('Invalid phone number');
-        }
-      },
     },
     password: {
       type: String,
@@ -46,36 +40,28 @@ const userSchema = mongoose.Schema(
     },
     birth: {
       type: String,
-      default: false,
     },
     province: {
       type: String,
-      default: false,
     },
     district: {
       type: String,
-      default: false,
     },
     commune: {
       type: String,
-      default: false,
     },
     address: {
       type: String,
-      default: false,
     },
     class: {
       type: String,
-      default: false,
     },
     gender: {
       type: String,
       enum: ["MEN", "FEMALE"],
-      default: false,
     },
     email: {
       type: String,
-      default: false,
     }
   },
   {
