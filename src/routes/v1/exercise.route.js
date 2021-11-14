@@ -230,7 +230,7 @@ module.exports = router;
  
  /**
  *  @swagger
- * /exercise/info/{id}:
+ * /exercise/calculate/{id}:
  * patch:
  *     summary: Calculate score of a exercise
  *     description: Authorized users can request calculate exercise.

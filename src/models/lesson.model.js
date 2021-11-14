@@ -6,7 +6,7 @@ let LessonSchema = new Schema({
   title: { type: String, required: true },
   url: { type: String, required: true },
   description: { type: String, required: true },
-  order: { type: Number, required: true },
+  order: { type: Number, required: true, unique: true },
   created_at: Date,
   updated_at: Date
 });

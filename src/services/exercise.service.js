@@ -20,10 +20,11 @@ const createExercise = async (exerciseBody) => {
 
 const createQuestionExam = async (questionArray) => {
     let questionIds = [];
-    questionArray.forEach(element => {
+
+    await Promise.all(questionArray.forEach(async (element) => {
         let question = await QuestionExam.create(element);
         questionIds.push(question._id);
-    });
+    }));
     return questionIds;
 };
 
@@ -47,7 +48,7 @@ const queryExercise = async (filter, options) => {
  * @returns {Promise<QueryResult>}
  */
  const queryQuestions = async (questionIds) => {
-    const questionList = await QuestionExam.find({_id : {$in : questionIds}});
+    const questionList = await QuestionExam.find({_id : {$in : questionIds}}, { answer:0 });
     return questionList;
 };
 

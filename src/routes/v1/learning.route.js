@@ -7,7 +7,7 @@ const learningController = require('../../controllers/learning.controller');
 const router = express.Router();
 
 router
-    .route('/study')
+    .route('/levels')
     .get(auth(), learningController.getStudyLevels);
 
 router
@@ -60,9 +60,9 @@ module.exports = router;
  * @swagger
  * /study/block:
  *   post:
- *     summary: Create a Exercise
- *     description: Only admins can create other Exercise.
- *     tags: [Exercise]
+ *     summary: Create a block
+ *     description: Only admins can create other block.
+ *     tags: [Study]
  *     security:
  *       - bearerAuth: []
  *     requestBody:
@@ -73,121 +73,28 @@ module.exports = router;
  *             type: object
  *             required:
  *               - title
- *               - lessonId
- *               - questions
+ *               - order
  *             properties:
  *               title:
  *                 type: string
- *               lessonId:
- *                 type: string
- *               questions:
- *                 type: array
- *                  items :'#/components/schemas/QuestionExam'
+ *               order:
+ *                 type: number
  *     responses:
  *       "201":
  *         description: Created
  *         content:
  *           application/json:
  *             schema:
- *                $ref: '#/components/schemas/Exercise'
+ *                $ref: '#/components/schemas/Block'
  *       "401":
  *         $ref: '#/components/responses/Unauthorized'
  *       "403":
  *         $ref: '#/components/responses/Forbidden'
- *
- *   get:
- *     summary: Get all Exercise
- *     description: Authorized users retrieve exercise.
- *     tags: [Exercise]
- *      security:
- *       - bearerAuth: []
- *     parameters:
- *          - in: query
- *         name: lessonId
- *         schema:
- *           type: string
- *         description: Lesson id
- *       - in: query
- *         name: sortBy
- *         schema:
- *           type: string
- *         description: sort by query in the form of field:desc/asc (ex. name:asc)
- *       - in: query
- *         name: limit
- *         schema:
- *           type: integer
- *           minimum: 1
- *         default: 10
- *         description: Maximum number of News
- *       - in: query
- *         name: page
- *         schema:
- *           type: integer
- *           minimum: 1
- *           default: 1
- *         description: Page number
- *     responses:
- *       "200":
- *         description: OK
- *         content:
- *           application/json:
- *             schema:
- *               type: object
- *               properties:
- *                 results:
- *                   type: array
- *                   items:
- *                     $ref: '#/components/schemas/Exercise'
- *                 page:
- *                   type: integer
- *                   example: 1
- *                 limit:
- *                   type: integer
- *                   example: 10
- *                 totalPages:
- *                   type: integer
- *                   example: 1
- *                 totalResults:
- *                   type: integer
- *                   example: 1
- *       "401":
- *         $ref: '#/components/responses/Unauthorized'
- *       "403":
- *         $ref: '#/components/responses/Forbidden'
- */
-
-/**
- * @swagger
- * /exercise/info/{id}:
- *   get:
- *     summary: Get a Exercise
- *     description: Authorized users can fetch exercise.
- *     tags: [Exercise]
- *     security:
- *       - bearerAuth: []
- *     parameters:
- *       - in: path
- *         name: id
- *         required: true
- *         schema:
- *           type: string
- *         description: News id
- *     responses:
- *       "200":
- *         description: OK
- *         content:
- *           application/json:
- *             schema:
- *                $ref: '#/components/schemas/Exercise'
- *       "403":
- *         $ref: '#/components/responses/Forbidden'
- *       "404":
- *         $ref: '#/components/responses/NotFound'
  *
  *   patch:
- *     summary: Update a Exercise
- *     description: Only admins can update other Exercise.
- *     tags: [Exercise]
+ *     summary: Update a Block
+ *     description: Only admins can update other block.
+ *     tags: [Study]
  *     security:
  *       - bearerAuth: []
  *     parameters:
@@ -196,7 +103,7 @@ module.exports = router;
  *         required: true
  *         schema:
  *           type: string
- *         description: News id
+ *         description: block id
  *     requestBody:
  *       required: true
  *       content:
@@ -206,23 +113,19 @@ module.exports = router;
  *             type: object
  *             required:
  *               - title
- *               - lessonId
- *               - questions
+ *               - order
  *             properties:
  *               title:
  *                 type: string
- *               lessonId:
- *                 type: string
- *               questions:
- *                 type: array
- *                  items :'#/components/schemas/QuestionExam'
+ *               order:
+ *                 type: number
  *     responses:
  *       "200":
  *         description: OK
  *         content:
  *           application/json:
  *             schema:
- *                $ref: '#/components/schemas/Exercise'
+ *                $ref: '#/components/schemas/Block'
  *       "401":
  *         $ref: '#/components/responses/Unauthorized'
  *       "403":
@@ -231,9 +134,9 @@ module.exports = router;
  *         $ref: '#/components/responses/NotFound'
  *
  *   delete:
- *     summary: Delete a Exercise
- *     description: Only admins can delete other Exercise.
- *     tags: [Exercise]
+ *     summary: Delete a block
+ *     description: Only admins can delete other block.
+ *     tags: [Study]
  *     security:
  *       - bearerAuth: []
  *     parameters:
@@ -242,7 +145,7 @@ module.exports = router;
  *         required: true
  *         schema:
  *           type: string
- *         description: Exercise id
+ *         description: block id
  *     responses:
  *       "200":
  *         description: No content
@@ -255,55 +158,388 @@ module.exports = router;
  */
 
 /**
-*  @swagger
-* /exercise/info/{id}:
-* patch:
-*     summary: Calculate score of a exercise
-*     description: Authorized users can request calculate exercise.
-*     tags: [Exercise]
-*     security:
-*       - bearerAuth: []
-*     parameters:
-*       - in: path
-*         name: id
-*         required: true
-*         schema:
-*           type: string
-*         description: exercise id
-*     requestBody:
-*       required: true
-*       content:
-*        content:
-*         application/json:
-*           schema:
-*             type: object
-*             required:
-*               - questions
-*             properties:
-*               questions:
-*                 type: array
-*                  items :
-*                      questionId:
-*                          type: string
-*                      answer:
-*                          type: string
-*     responses:
-*       "200":
-*         description: OK
-*         content:
-*           application/json:
-*             schema:
-*                type: object
-*                properties:
-*                  exerciseId:
-*                      type: string
-*                  score:
-*                      type: number
-*       "401":
-*         $ref: '#/components/responses/Unauthorized'
-*       "403":
-*         $ref: '#/components/responses/Forbidden'
-*       "404":
-*         $ref: '#/components/responses/NotFound'
-*
-*/
+ * @swagger
+ * /study/class:
+ *   post:
+ *     summary: Create a class
+ *     description: Only admins can create other class.
+ *     tags: [Study]
+ *     security:
+ *       - bearerAuth: []
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required:
+ *               - title
+ *               - order
+ *               - blockId
+ *             properties:
+ *               title:
+ *                 type: string
+ *               order:
+ *                 type: number
+ *               blockId:
+ *                 type: string
+ *     responses:
+ *       "201":
+ *         description: Created
+ *         content:
+ *           application/json:
+ *             schema:
+ *                $ref: '#/components/schemas/Class'
+ *       "401":
+ *         $ref: '#/components/responses/Unauthorized'
+ *       "403":
+ *         $ref: '#/components/responses/Forbidden'
+ *
+ *   patch:
+ *     summary: Update a class
+ *     description: Only admins can update other class.
+ *     tags: [Study]
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: block id
+ *     requestBody:
+ *       required: true
+ *       content:
+ *        content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required:
+ *               - title
+ *               - order
+ *               - blockId
+ *             properties:
+ *               title:
+ *                 type: string
+ *               order:
+ *                 type: number
+ *               blockId:
+ *                 type: string
+ *     responses:
+ *       "200":
+ *         description: OK
+ *         content:
+ *           application/json:
+ *             schema:
+ *                $ref: '#/components/schemas/Class'
+ *       "401":
+ *         $ref: '#/components/responses/Unauthorized'
+ *       "403":
+ *         $ref: '#/components/responses/Forbidden'
+ *       "404":
+ *         $ref: '#/components/responses/NotFound'
+ *
+ *   delete:
+ *     summary: Delete a class
+ *     description: Only admins can delete other class.
+ *     tags: [Study]
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: class id
+ *     responses:
+ *       "200":
+ *         description: No content
+ *       "401":
+ *         $ref: '#/components/responses/Unauthorized'
+ *       "403":
+ *         $ref: '#/components/responses/Forbidden'
+ *       "404":
+ *         $ref: '#/components/responses/NotFound'
+ */
+
+/**
+ * @swagger
+ * /study/lecture:
+ *   post:
+ *     summary: Create a lecture
+ *     description: Only admins can create other lecture.
+ *     tags: [Study]
+ *     security:
+ *       - bearerAuth: []
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required:
+ *               - title
+ *               - order
+ *               - thumbnail
+ *               - classId
+ *             properties:
+ *               title:
+ *                 type: string
+ *               order:
+ *                 type: number
+ *               thumbnail:
+ *                 type: string
+ *               classId:
+ *                 type: string
+ *     responses:
+ *       "201":
+ *         description: Created
+ *         content:
+ *           application/json:
+ *             schema:
+ *                $ref: '#/components/schemas/Lecture'
+ *       "401":
+ *         $ref: '#/components/responses/Unauthorized'
+ *       "403":
+ *         $ref: '#/components/responses/Forbidden'
+ *
+ *   patch:
+ *     summary: Update a lecture
+ *     description: Only admins can update other lecture.
+ *     tags: [Study]
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: lecture id
+ *     requestBody:
+ *       required: true
+ *       content:
+ *        content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required:
+ *               - title
+ *               - order
+ *               - thumbnail
+ *               - classId
+ *             properties:
+ *               title:
+ *                 type: string
+ *               order:
+ *                 type: number
+ *               thumbnail:
+ *                 type: string
+ *               classId:
+ *                 type: string
+ *     responses:
+ *       "200":
+ *         description: OK
+ *         content:
+ *           application/json:
+ *             schema:
+ *                $ref: '#/components/schemas/Lecture'
+ *       "401":
+ *         $ref: '#/components/responses/Unauthorized'
+ *       "403":
+ *         $ref: '#/components/responses/Forbidden'
+ *       "404":
+ *         $ref: '#/components/responses/NotFound'
+ *
+ *   get:
+ *     summary: Get lesson in a lecture
+ *     description: Only authorized user can access.
+ *     tags: [Study]
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: lecture id
+ *     responses:
+ *       "200":
+ *         description: OK
+ *         content:
+ *           application/json:
+ *             schema:
+ *                type: array
+ *                items:
+ *                  $ref: '#/components/schemas/Lesson'
+ *       "401":
+ *         $ref: '#/components/responses/Unauthorized'
+ *       "403":
+ *         $ref: '#/components/responses/Forbidden'
+ *       "404":
+ *         $ref: '#/components/responses/NotFound'
+ * 
+ *   delete:
+ *     summary: Delete a lecture
+ *     description: Only admins can delete other lecture.
+ *     tags: [Study]
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: lecture id
+ *     responses:
+ *       "200":
+ *         description: No content
+ *       "401":
+ *         $ref: '#/components/responses/Unauthorized'
+ *       "403":
+ *         $ref: '#/components/responses/Forbidden'
+ *       "404":
+ *         $ref: '#/components/responses/NotFound'
+ */
+
+/**
+ * @swagger
+ * /study/lesson:
+ *   post:
+ *     summary: Create a lesson
+ *     description: Only admins can create other lesson.
+ *     tags: [Study]
+ *     security:
+ *       - bearerAuth: []
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required:
+ *               - title
+ *               - order
+ *               - url
+ *               - description
+ *             properties:
+ *               title:
+ *                 type: string
+ *               order:
+ *                 type: number
+ *               url:
+ *                 type: string
+ *               description:
+ *                 type: string
+ *     responses:
+ *       "201":
+ *         description: Created
+ *         content:
+ *           application/json:
+ *             schema:
+ *                $ref: '#/components/schemas/Lesson'
+ *       "401":
+ *         $ref: '#/components/responses/Unauthorized'
+ *       "403":
+ *         $ref: '#/components/responses/Forbidden'
+ *
+ *   patch:
+ *     summary: Update a lesson
+ *     description: Only admins can update other lesson.
+ *     tags: [Study]
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: lesson id
+ *     requestBody:
+ *       required: true
+ *       content:
+ *        content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required:
+ *               - title
+ *               - order
+ *               - url
+ *               - description
+ *             properties:
+ *               title:
+ *                 type: string
+ *               order:
+ *                 type: number
+ *               url:
+ *                 type: string
+ *               description:
+ *                 type: string
+ *     responses:
+ *       "200":
+ *         description: OK
+ *         content:
+ *           application/json:
+ *             schema:
+ *                $ref: '#/components/schemas/Lesson'
+ *       "401":
+ *         $ref: '#/components/responses/Unauthorized'
+ *       "403":
+ *         $ref: '#/components/responses/Forbidden'
+ *       "404":
+ *         $ref: '#/components/responses/NotFound'
+ *
+ *   delete:
+ *     summary: Delete a lesson
+ *     description: Only admins can delete other lesson.
+ *     tags: [Study]
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: lesson id
+ *     responses:
+ *       "200":
+ *         description: No content
+ *       "401":
+ *         $ref: '#/components/responses/Unauthorized'
+ *       "403":
+ *         $ref: '#/components/responses/Forbidden'
+ *       "404":
+ *         $ref: '#/components/responses/NotFound'
+ */
+
+/**
+ * @swagger
+ * /study/levels:
+ *   get:
+ *     summary: Get all study levels
+ *     description: Authorized users can fetch study levels.
+ *     tags: [Study]
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *     responses:
+ *       "200":
+ *         description: OK
+ *         content:
+ *           application/json:
+ *             schema:
+ *                type: array
+ *                items:
+ *                  type: object
+ *       "403":
+ *         $ref: '#/components/responses/Forbidden'
+ *       "404":
+ *         $ref: '#/components/responses/NotFound'
+ */

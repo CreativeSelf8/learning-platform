@@ -7,7 +7,7 @@ let QuestionExamSchema = new Schema({
   multiChoices: { type: [String] },
   answer: { type: String, required: true },
   description: { type: String },
-  order: { type: Number },
+  order: { type: Number, unique: true },
   created_at: Date,
   updated_at: Date
 });

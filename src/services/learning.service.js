@@ -70,12 +70,7 @@ const queryClassList = async (blockIds) => {
  * Query for lectures
  * @returns {Promise<QueryResult>}
  */
-const queryLecture = async (classId, userId) => {
-    const user = User.findById(userId);
-    const classData = Class.findById(classId);
-    if (classData.age > user.age && !user.role.includes(roles.admin)) {
-        return null;
-    }
+const queryLecture = async (classId) => {
     const lectureData = await Lecture.find({ classId: classId }).sort({ order: "ascending" });
     return lectureData;
 };
@@ -94,14 +89,8 @@ const queryLectureList = async (classIds) => {
  * Query for lectures
  * @returns {Promise<QueryResult>}
  */
-const queryLesson = async (lectureId, userId) => {
-    const lecture = Lecture.findById(lectureId);
-    const classData = Class.findById(lecture.classId);
-    const user = User.findById(userId);
-    if (classData.age > user.age && !user.role.includes(roles.admin)) {
-        return null;
-    }
-    const lessonData = await Lesson.find({ classId: lecture }).sort({ order: "ascending" });
+const queryLesson = async (lectureId) => {
+    const lessonData = await Lesson.find({ lectureId: lectureId }).sort({ order: "ascending" });
     return lessonData;
 };
 
@@ -239,11 +228,6 @@ const getStudyLevels = async (userId) => {
         return obj._id
     })
     const classes = await queryClassList(blockIds);
-    classes.forEach((element, index) => {
-        if (!user.role.includes(roles.admin) && element.age > user.age) {
-            classes.splice(index, 1);
-        }
-    })
     let classIds = classes.map(obj => {
         return obj._id
     })

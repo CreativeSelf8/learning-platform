@@ -27,7 +27,7 @@ const defaultRoutes = [
     route: exerciseRoute,
   },
   {
-    path: '/learning',
+    path: '/study',
     route: learningRoute,
   },
 ];

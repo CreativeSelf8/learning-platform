@@ -5,9 +5,8 @@ const Schema = mongoose.Schema;
 let ClassSchema = new Schema({
   title: { type: String, required: true },
   blockId: { type: String, required: true },
-  age: { type: Number, required: true },
   lectureIds: { type: [String], required: true },
-  order: { type: Number, required: true },
+  order: { type: Number, required: true, unique: true },
   created_at: Date,
   updated_at: Date
 });
@@ -29,8 +28,8 @@ ClassSchema.pre('save', function (next) {
   next();
 });
 // add plugin that converts mongoose to json
-userSchema.plugin(toJSON);
-userSchema.plugin(paginate);
+ClassSchema.plugin(toJSON);
+ClassSchema.plugin(paginate);
 let Class = mongoose.model('Class', ClassSchema);
 
 module.exports = Class;

@@ -6,7 +6,7 @@ const Schema = mongoose.Schema;
 
 let BlockSchema = new Schema({
   title: { type: String, required: true },
-  order: { type: Number, required: true },
+  order: { type: Number, required: true, unique: true },
   classIds: { type: [String], required: true },
   created_at: Date,
   updated_at: Date

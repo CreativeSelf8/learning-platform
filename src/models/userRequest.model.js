@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 const { toJSON, paginate } = require('./plugins');
 
-const UserProgressSchema = mongoose.Schema(
+const UserRequestSchema = mongoose.Schema(
     {
         name: {
             type: String,
@@ -34,12 +34,12 @@ const UserProgressSchema = mongoose.Schema(
 );
 
 // add plugin that converts mongoose to json
-UserProgressSchema.plugin(toJSON);
-UserProgressSchema.plugin(paginate);
+UserRequestSchema.plugin(toJSON);
+UserRequestSchema.plugin(paginate);
 
 /**
- * @typedef UserProgress
+ * @typedef UserRequest
  */
-const UserProgress = mongoose.model('UserProgress', UserProgressSchema);
+const UserRequest = mongoose.model('UserRequest', UserRequestSchema);
 
-module.exports = UserProgress;
+module.exports = UserRequest;

@@ -27,8 +27,8 @@ NewsSchema.pre('save', function (next) {
   next();
 });
 // add plugin that converts mongoose to json
-userSchema.plugin(toJSON);
-userSchema.plugin(paginate);
+NewsSchema.plugin(toJSON);
+NewsSchema.plugin(paginate);
 let News = mongoose.model('News', NewsSchema);
 
 module.exports = News;
