@@ -28,9 +28,10 @@ const acceptRequest = async (body) => {
     throw new ApiError(httpStatus.BAD_REQUEST, 'Phone already taken');
   }
   await UserRequest.deleteOne({_id: body.requestId});
-  const user = Object.assign(user, body);
+  const user = {};
+  Object.assign(user, body);
   user.role = 'user';
-  return UserRequest.create(user);
+  return User.create(user);
 };
 
 /**

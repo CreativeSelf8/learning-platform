@@ -3,15 +3,24 @@ const { password, objectId } = require('./custom.validation');
 
 const createUser = {
   body: Joi.object().keys({
+    name: Joi.string(),
+    phone: Joi.string(),
     password: Joi.string().required().custom(password),
-    role: Joi.string().required().valid('user', 'admin'),
+    class: Joi.string(),
+    address: Joi.string(),
+    district: Joi.string(),
+    commune: Joi.string(),
+    birth: Joi.string(),
+    province: Joi.string(),
+    gender: Joi.string(),
+    email: Joi.string(),
   }),
 };
 
 const requestUser = {
   body: Joi.object().keys({
     name: Joi.string(),
-    phone: Joi.number(),
+    phone: Joi.string(),
     birth: Joi.string(),
     address: Joi.string(),
     class: Joi.string(),
@@ -22,9 +31,17 @@ const requestUser = {
 const acceptRequest = {
   body: Joi.object().keys({
     name: Joi.string(),
-    phone: Joi.number(),
+    phone: Joi.string(),
     password: Joi.string().required().custom(password),
     requestId: Joi.string().custom(objectId),
+    class: Joi.string(),
+    address: Joi.string(),
+    district: Joi.string(),
+    commune: Joi.string(),
+    birth: Joi.string(),
+    province: Joi.string(),
+    gender: Joi.string(),
+    email: Joi.string(),
   }),
 };
 
