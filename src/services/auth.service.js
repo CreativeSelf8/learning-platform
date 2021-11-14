@@ -20,6 +20,23 @@ const loginUserWithPhoneAndPassword = async (phone, password) => {
 };
 
 /**
+ * Login with username and password
+ * @param {string} phone
+ * @param {string} password
+ * @returns {Promise<User>}
+ */
+ const loginAdminWithPhoneAndPassword = async (phone, password) => {
+  const user = await userService.getUserByPhone(phone);
+  if (!user || !(await user.isPasswordMatch(password))) {
+    throw new ApiError(httpStatus.UNAUTHORIZED, 'Incorrect phone or password');
+  }
+  if (user.role !== 'admin') {
+    throw new ApiError(httpStatus.UNAUTHORIZED, "Invalid permission");
+  }
+  return user;
+};
+
+/**
  * Logout
  * @param {string} refreshToken
  * @returns {Promise}
@@ -96,4 +113,5 @@ module.exports = {
   refreshAuth,
   resetPassword,
   verifyEmail,
+  loginAdminWithPhoneAndPassword
 };

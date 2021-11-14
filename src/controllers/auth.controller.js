@@ -22,10 +22,7 @@ const login = catchAsync(async (req, res) => {
 
 const adminLogin = catchAsync(async (req, res) => {
   const { phone, password } = req.body;
-  const user = await authService.loginUserWithPhoneAndPassword(phone, password);
-  if (user.role !== 'admin') {
-    throw new ApiError(httpStatus.UNAUTHORIZED);
-  }
+  const user = await authService.loginAdminWithPhoneAndPassword(phone, password);
   const tokens = await tokenService.generateAuthTokens(user);
   res.send({ user, tokens });
 });
