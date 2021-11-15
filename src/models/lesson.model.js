@@ -5,7 +5,7 @@ const Schema = mongoose.Schema;
 let LessonSchema = new Schema({
   title: { type: String, required: true },
   url: { type: String, required: true },
-  description: { type: String, required: true },
+  description: { type: String},
   order: { type: Number, required: true },
   created_at: Date,
   updated_at: Date

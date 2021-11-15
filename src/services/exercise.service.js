@@ -21,10 +21,10 @@ const createExercise = async (exerciseBody) => {
 const createQuestionExam = async (questionArray) => {
     let questionIds = [];
 
-    await Promise.all(questionArray.forEach(async (element) => {
+    questionArray.forEach(async (element) => {
         let question = await QuestionExam.create(element);
         questionIds.push(question._id);
-    }));
+    });
     return questionIds;
 };
 
