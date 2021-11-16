@@ -17,6 +17,7 @@ router
 
 router
     .route('/block/')
+    .get(auth(), learningController.getListBlock)
     .post(auth('manageAdmin'), validate(learningValidation.createBlock), learningController.createBlock);
 
 router
@@ -26,6 +27,7 @@ router
 
 router
     .route('/class/')
+    .get(auth(), learningController.getListClass)
     .post(auth('manageAdmin'), validate(learningValidation.createClass), learningController.createClass)
 
 router
@@ -36,6 +38,7 @@ router
 
 router
     .route('/lecture/')
+    .get(auth(), learningController.getListLecture)
     .post(auth('manageAdmin'), validate(learningValidation.createLecture), learningController.createLecture)
 
 router
@@ -45,6 +48,7 @@ router
 
 router
     .route('/lesson/')
+    .get(auth(), learningController.getListLesson)
     .post(auth('manageAdmin'), validate(learningValidation.createLesson), learningController.createLesson)
 
 module.exports = router;
@@ -90,7 +94,68 @@ module.exports = router;
  *         $ref: '#/components/responses/Unauthorized'
  *       "403":
  *         $ref: '#/components/responses/Forbidden'
+ * 
+ *   get:
+ *     summary: Get all Blocks
+ *     description: Everyone retrieve all Blocks.
+ *     tags: [Study]
+ *     parameters:
+ *       - in: query
+ *         name: title
+ *         schema:
+ *           type: string
+ *         description: Block' title
+ *       - in: query
+ *         name: sortBy
+ *         schema:
+ *           type: string
+ *         description: sort by query in the form of field:desc/asc (ex. name:asc)
+ *       - in: query
+ *         name: limit
+ *         schema:
+ *           type: integer
+ *           minimum: 1
+ *         default: 10
+ *         description: Maximum number of block
+ *       - in: query
+ *         name: page
+ *         schema:
+ *           type: integer
+ *           minimum: 1
+ *           default: 1
+ *         description: Page number
+ *     responses:
+ *       "200":
+ *         description: OK
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 results:
+ *                   type: array
+ *                   items:
+ *                     $ref: '#/components/schemas/Block'
+ *                 page:
+ *                   type: integer
+ *                   example: 1
+ *                 limit:
+ *                   type: integer
+ *                   example: 10
+ *                 totalPages:
+ *                   type: integer
+ *                   example: 1
+ *                 totalResults:
+ *                   type: integer
+ *                   example: 1
+ *       "403":
+ *         $ref: '#/components/responses/Forbidden'
  *
+ */
+
+/**
+ * @swagger
+ * /study/block/{blockId}:
  *   patch:
  *     summary: Update a Block
  *     description: Only admins can update other block.
@@ -160,6 +225,68 @@ module.exports = router;
 /**
  * @swagger
  * /study/class:
+ * 
+ *   get:
+ *     summary: Get all classes
+ *     description: Everyone retrieve all classes.
+ *     tags: [Study]
+ *     parameters:
+ *       - in: query
+ *         name: blockId
+ *         schema:
+ *           type: string
+ *         description: Block' id
+ *       - in: query
+ *         name: title
+ *         schema:
+ *           type: string
+ *         description: Class' title
+ *       - in: query
+ *         name: sortBy
+ *         schema:
+ *           type: string
+ *         description: sort by query in the form of field:desc/asc (ex. name:asc)
+ *       - in: query
+ *         name: limit
+ *         schema:
+ *           type: integer
+ *           minimum: 1
+ *         default: 10
+ *         description: Maximum number of class
+ *       - in: query
+ *         name: page
+ *         schema:
+ *           type: integer
+ *           minimum: 1
+ *           default: 1
+ *         description: Page number
+ *     responses:
+ *       "200":
+ *         description: OK
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 results:
+ *                   type: array
+ *                   items:
+ *                     $ref: '#/components/schemas/Class'
+ *                 page:
+ *                   type: integer
+ *                   example: 1
+ *                 limit:
+ *                   type: integer
+ *                   example: 10
+ *                 totalPages:
+ *                   type: integer
+ *                   example: 1
+ *                 totalResults:
+ *                   type: integer
+ *                   example: 1
+ *       "403":
+ *         $ref: '#/components/responses/Forbidden'
+ * 
  *   post:
  *     summary: Create a class
  *     description: Only admins can create other class.
@@ -194,7 +321,12 @@ module.exports = router;
  *         $ref: '#/components/responses/Unauthorized'
  *       "403":
  *         $ref: '#/components/responses/Forbidden'
- *
+ */
+
+
+/** 
+ * @swagger
+ * /study/class/{classId}:
  *   patch:
  *     summary: Update a class
  *     description: Only admins can update other class.
@@ -267,6 +399,68 @@ module.exports = router;
 /**
  * @swagger
  * /study/lecture:
+ * 
+ *   get:
+ *     summary: Get all lectures
+ *     description: Everyone retrieve all lectures.
+ *     tags: [Study]
+ *     parameters:
+ *       - in: query
+ *         name: title
+ *         schema:
+ *           type: string
+ *         description: Lecture' title
+ *       - in: query
+ *         name: classId
+ *         schema:
+ *           type: string
+ *         description: class' id
+ *       - in: query
+ *         name: sortBy
+ *         schema:
+ *           type: string
+ *         description: sort by query in the form of field:desc/asc (ex. name:asc)
+ *       - in: query
+ *         name: limit
+ *         schema:
+ *           type: integer
+ *           minimum: 1
+ *         default: 10
+ *         description: Maximum number of Lecture
+ *       - in: query
+ *         name: page
+ *         schema:
+ *           type: integer
+ *           minimum: 1
+ *           default: 1
+ *         description: Page number
+ *     responses:
+ *       "200":
+ *         description: OK
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 results:
+ *                   type: array
+ *                   items:
+ *                     $ref: '#/components/schemas/Lecture'
+ *                 page:
+ *                   type: integer
+ *                   example: 1
+ *                 limit:
+ *                   type: integer
+ *                   example: 10
+ *                 totalPages:
+ *                   type: integer
+ *                   example: 1
+ *                 totalResults:
+ *                   type: integer
+ *                   example: 1
+ *       "403":
+ *         $ref: '#/components/responses/Forbidden'
+ * 
  *   post:
  *     summary: Create a lecture
  *     description: Only admins can create other lecture.
@@ -304,7 +498,12 @@ module.exports = router;
  *         $ref: '#/components/responses/Unauthorized'
  *       "403":
  *         $ref: '#/components/responses/Forbidden'
- *
+ */
+
+/** 
+ * @swagger
+ * /study/lecture/{lectureId}:
+ * 
  *   patch:
  *     summary: Update a lecture
  *     description: Only admins can update other lecture.
@@ -409,6 +608,68 @@ module.exports = router;
 /**
  * @swagger
  * /study/lesson:
+ *  get:
+ *     summary: Get all lessons
+ *     description: Everyone retrieve all lessons.
+ *     tags: [Study]
+ *     parameters:
+ *       - in: query
+ *         name: title
+ *         schema:
+ *           type: string
+ *         description: Lesson' title
+ *       - in: query
+ *         name: lectureId
+ *         schema:
+ *           type: string
+ *         description: lecture's id
+ *       - in: query
+ *         name: sortBy
+ *         schema:
+ *           type: string
+ *         description: sort by query in the form of field:desc/asc (ex. name:asc)
+ *       - in: query
+ *         name: limit
+ *         schema:
+ *           type: integer
+ *           minimum: 1
+ *         default: 10
+ *         description: Maximum number of Lesson
+ *       - in: query
+ *         name: page
+ *         schema:
+ *           type: integer
+ *           minimum: 1
+ *           default: 1
+ *         description: Page number
+ *     responses:
+ *       "200":
+ *         description: OK
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 results:
+ *                   type: array
+ *                   items:
+ *                     $ref: '#/components/schemas/Lesson'
+ *                 page:
+ *                   type: integer
+ *                   example: 1
+ *                 limit:
+ *                   type: integer
+ *                   example: 10
+ *                 totalPages:
+ *                   type: integer
+ *                   example: 1
+ *                 totalResults:
+ *                   type: integer
+ *                   example: 1
+ *       "403":
+ *         $ref: '#/components/responses/Forbidden'
+ * 
+ * 
  *   post:
  *     summary: Create a lesson
  *     description: Only admins can create other lesson.
@@ -447,6 +708,12 @@ module.exports = router;
  *       "403":
  *         $ref: '#/components/responses/Forbidden'
  *
+ */
+
+/**
+ * @swagger
+ * /study/lesson/{lessonId}:
+ * 
  *   patch:
  *     summary: Update a lesson
  *     description: Only admins can update other lesson.

@@ -95,6 +95,62 @@ const queryLesson = async (lectureId) => {
 };
 
 /**
+ * Query for blocks
+ * @param {Object} filter - Mongo filter
+ * @param {Object} options - Query options
+ * @param {string} [options.sortBy] - Sort option in the format: sortField:(desc|asc)
+ * @param {number} [options.limit] - Maximum number of results per page (default = 10)
+ * @param {number} [options.page] - Current page (default = 1)
+ * @returns {Promise<QueryResult>}
+ */
+ const queryBlocks = async (filter, options) => {
+    const blockList = await Block.paginate(filter, options);
+    return blockList;
+};
+
+/**
+ * Query for class
+ * @param {Object} filter - Mongo filter
+ * @param {Object} options - Query options
+ * @param {string} [options.sortBy] - Sort option in the format: sortField:(desc|asc)
+ * @param {number} [options.limit] - Maximum number of results per page (default = 10)
+ * @param {number} [options.page] - Current page (default = 1)
+ * @returns {Promise<QueryResult>}
+ */
+ const queryClasses = async (filter, options) => {
+    const classList = await Class.paginate(filter, options);
+    return classList;
+};
+
+/**
+ * Query for lectures
+ * @param {Object} filter - Mongo filter
+ * @param {Object} options - Query options
+ * @param {string} [options.sortBy] - Sort option in the format: sortField:(desc|asc)
+ * @param {number} [options.limit] - Maximum number of results per page (default = 10)
+ * @param {number} [options.page] - Current page (default = 1)
+ * @returns {Promise<QueryResult>}
+ */
+ const queryLectures = async (filter, options) => {
+    const lectureList = await Lecture.paginate(filter, options);
+    return lectureList;
+};
+
+/**
+ * Query for blocks
+ * @param {Object} filter - Mongo filter
+ * @param {Object} options - Query options
+ * @param {string} [options.sortBy] - Sort option in the format: sortField:(desc|asc)
+ * @param {number} [options.limit] - Maximum number of results per page (default = 10)
+ * @param {number} [options.page] - Current page (default = 1)
+ * @returns {Promise<QueryResult>}
+ */
+ const queryLessons = async (filter, options) => {
+    const lessonList = await Lesson.paginate(filter, options);
+    return lessonList;
+};
+
+/**
  * Update Block by id
  * @param {ObjectId} blockId
  * @param {Object} updateBody
@@ -235,6 +291,7 @@ const getStudyLevels = async (userId) => {
     let result = [];
     blocks.forEach(element => {
         var itemData = {
+            id: element._id,
             blockTitle: element.title,
             order: element.order,
             classes: []
@@ -243,6 +300,7 @@ const getStudyLevels = async (userId) => {
             .sort((a, b) => (a.order > b.order) ? 1 : -1).forEach(classElement => {
                 console.log(classElement);
                 var classItem = {
+                    id: classElement._id,
                     classTitle: classElement.title,
                     order: classElement.order,
                     lectureList: []
@@ -250,6 +308,7 @@ const getStudyLevels = async (userId) => {
                 lectureList.filter(e => e.classId === classElement._id.toString())
                     .sort((a, b) => (a.order > b.order) ? 1 : -1).forEach(lectureElement => {
                         var lectureItem = {
+                            id: lectureElement._id,
                             title: lectureElement.title,
                             order: lectureElement.order,
                             thumbnail: lectureElement.thumbnail
@@ -284,5 +343,9 @@ module.exports = {
     createBlock,
     createClass,
     createLecture,
-    getStudyLevels
+    getStudyLevels,
+    queryLessons,
+    queryBlocks,
+    queryClasses,
+    queryLectures,
 };

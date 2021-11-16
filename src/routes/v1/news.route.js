@@ -68,6 +68,11 @@ module.exports = router;
  *     tags: [News]
  *     parameters:
  *       - in: query
+ *         name: title
+ *         schema:
+ *           type: string
+ *         description: News' title
+ *       - in: query
  *         name: sortBy
  *         schema:
  *           type: string

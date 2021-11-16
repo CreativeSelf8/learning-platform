@@ -75,6 +75,34 @@ const getLessons = catchAsync(async (req, res) => {
     res.send(lessonList);
 });
 
+const getListBlock = catchAsync(async (req, res) => {
+    const filter = pick(req.query, ['title']);
+    const options = pick(req.query, ['sortBy', 'limit', 'page']);
+    const result = await learningService.queryBlocks(filter, options);
+    res.send(result);
+});
+
+const getListClass = catchAsync(async (req, res) => {
+    const filter = pick(req.query, ['title', 'blockId']);
+    const options = pick(req.query, ['sortBy', 'limit', 'page']);
+    const result = await learningService.queryClasses(filter, options);
+    res.send(result);
+});
+
+const getListLecture = catchAsync(async (req, res) => {
+    const filter = pick(req.query, ['title', 'classId']);
+    const options = pick(req.query, ['sortBy', 'limit', 'page']);
+    const result = await learningService.queryLectures(filter, options);
+    res.send(result);
+});
+
+const getListLesson = catchAsync(async (req, res) => {
+    const filter = pick(req.query, ['title', 'lectureId']);
+    const options = pick(req.query, ['sortBy', 'limit', 'page']);
+    const result = await learningService.queryLessons(filter, options);
+    res.send(result);
+});
+
 module.exports = {
     createBlock,
     createClass,
@@ -89,5 +117,9 @@ module.exports = {
     deleteLecture,
     deleteLesson,
     getStudyLevels,
+    getListBlock,
+    getListClass,
+    getListLecture,
+    getListLesson,
     getLessons
 };
