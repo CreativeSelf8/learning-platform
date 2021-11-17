@@ -608,7 +608,7 @@ module.exports = router;
 /**
  * @swagger
  * /study/lesson:
- *  get:
+ *   get:
  *     summary: Get all lessons
  *     description: Everyone retrieve all lessons.
  *     tags: [Study]

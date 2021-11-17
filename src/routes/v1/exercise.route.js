@@ -240,7 +240,7 @@ module.exports = router;
 /**
  * @swagger
  * /exercise/calculate/{id}:
- * patch:
+ *  patch:
  *     summary: Calculate score of a exercise
  *     description: Authorized users can request calculate exercise.
  *     tags: [Exercise]
@@ -256,14 +256,31 @@ module.exports = router;
  *     requestBody:
  *       content:
  *          application/json:
- *          schema:      # Request body contents
- *           type: object
- *            properties:
- *              id:
- *                type: integer
- *              name:
- *                type: string
+ *           schema:
+ *             type: object
+ *             required:
+ *               - questions
+ *             properties:
+ *               questions:
+ *                 type: array
+ *                 items :
+ *                      properties:
+ *                          questionId:
+ *                              type: string
+ *                          answer: 
+ *                              type: string
  *     responses:
+ *       "200":
+ *         description: OK
+ *         content:
+ *           application/json:
+ *             schema:
+ *                type: object
+ *                properties:
+ *                  exerciseId:
+ *                      type: string
+ *                  score:
+ *                      type: number
  *       "401":
  *         $ref: '#/components/responses/Unauthorized'
  *       "403":
