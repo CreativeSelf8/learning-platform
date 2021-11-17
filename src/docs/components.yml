@@ -156,15 +156,15 @@ components:
           type: string
 
   responses:
-    DuplicateEmail:
-      description: Email already taken
+    DuplicatePhone:
+      description: Phone already taken
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
           example:
             code: 400
-            message: Email already taken
+            message: Phone already taken
     Unauthorized:
       description: Unauthorized
       content:
