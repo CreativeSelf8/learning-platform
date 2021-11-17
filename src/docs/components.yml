@@ -5,19 +5,42 @@ components:
       properties:
         id:
           type: string
-        email:
+        phone:
           type: string
-          format: email
         name:
           type: string
         role:
           type: string
           enum: [user, admin]
+        birth:
+          type: string
+        province:
+          type: string
+        district:
+          type: string
+        commune:
+          type: string
+        address:
+          type: string
+        class:
+          type: string
+        gender:
+          type: string
+        email:
+          type: string
       example:
         id: 5ebac534954b54139806c112
         email: fake@example.com
         name: fake name
         role: user
+        phone: 012345678
+        birth: ngaysinhtheostring
+        province: NA
+        district: NA
+        commune: NA
+        address: NA
+        class: Lop 1
+        gender: MALE
 
     Token:
       type: object
@@ -64,6 +87,7 @@ components:
           type: string
         thumbnail:
           type: string
+
 
     Lesson:
       type: object

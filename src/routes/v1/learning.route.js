@@ -686,6 +686,7 @@ module.exports = router;
  *               - title
  *               - order
  *               - url
+ *               - lectureId
  *               - description
  *             properties:
  *               title:
@@ -695,6 +696,8 @@ module.exports = router;
  *               url:
  *                 type: string
  *               description:
+ *                 type: string
+ *               lectureId:
  *                 type: string
  *     responses:
  *       "201":
