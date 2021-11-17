@@ -5,11 +5,13 @@ const createExercise = {
     body: Joi.object().keys({
         title: Joi.string().required(),
         lessonId: Joi.string().required(),
+        order: Joi.number(),
         questions: Joi.array().items(Joi.object().keys({
             title: Joi.string().required(),
             answer: Joi.string().required(),
             multiChoices: Joi.required(),
             order: Joi.required(),
+            description: Joi.string()
         }))
     }),
 };

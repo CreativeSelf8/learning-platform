@@ -687,15 +687,12 @@ module.exports = router;
  *               - order
  *               - url
  *               - lectureId
- *               - description
  *             properties:
  *               title:
  *                 type: string
  *               order:
  *                 type: number
  *               url:
- *                 type: string
- *               description:
  *                 type: string
  *               lectureId:
  *                 type: string

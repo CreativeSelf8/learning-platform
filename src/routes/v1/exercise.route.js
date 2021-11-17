@@ -56,7 +56,8 @@ module.exports = router;
  *                 type: string
  *               questions:
  *                 type: array
- *                  items :'#/components/schemas/QuestionExam'
+ *                 items :
+ *                    ref: '#/components/schemas/QuestionExam'
  *     responses:
  *       "201":
  *         description: Created

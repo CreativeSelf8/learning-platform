@@ -132,6 +132,7 @@ const queryLesson = async (lectureId) => {
  * @returns {Promise<QueryResult>}
  */
  const queryLectures = async (filter, options) => {
+    console.log(filter);
     const lectureList = await Lecture.paginate(filter, options);
     return lectureList;
 };

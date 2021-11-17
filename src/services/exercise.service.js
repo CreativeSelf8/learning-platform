@@ -14,17 +14,16 @@ const createExercise = async (exerciseBody) => {
         throw new ApiError(httpStatus.NOT_FOUND, 'Lesson not found');
     }
     exerciseBody.questionIds = await createQuestionExam(exerciseBody.questions);
-
     return Exercise.create(exerciseBody);
 };
 
 const createQuestionExam = async (questionArray) => {
     let questionIds = [];
 
-    questionArray.forEach(async (element) => {
+    for(let element of questionArray) {
         let question = await QuestionExam.create(element);
         questionIds.push(question._id);
-    });
+    }
     return questionIds;
 };
 
@@ -39,7 +38,24 @@ const createQuestionExam = async (questionArray) => {
  */
 const queryExercise = async (filter, options) => {
     const exerciseData = await Exercise.paginate(filter, options);
-    return exerciseData;
+    let questionIds = [];
+    for (let element of exerciseData.results) {
+        for (let questionId of element.questionIds) {
+            questionIds.push(questionId);
+        }
+        
+    }
+    const questionArray = await queryQuestions(questionIds);
+    let result = {};
+    Object.assign(result, exerciseData);
+    result.results.map(function (element) {
+        element.questionList = questionArray.filter(e => element.questionIds.includes(e._id.toString()));
+        console.log(element);
+        return element;
+    })
+    console.log(result);
+
+    return result;
 };
 
 /**
