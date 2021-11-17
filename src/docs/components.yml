@@ -114,10 +114,14 @@ components:
           type: string
         multiChoices:
           type: array
+          items:
+            type: string
         description:
           type: string
         order:
           type: number
+        answer:
+          type: string
 
     UserRequest:
       type: object

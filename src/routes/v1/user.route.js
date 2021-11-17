@@ -337,11 +337,11 @@ module.exports = router;
  *                 type: string
  *               address:
  *                 type: string
- *              email:
+ *               email:
  *                 type: string
- *              age:
+ *               age:
  *                 type: number
- *              gender:
+ *               gender:
  *                 type: string
  *     responses:
  *       "200":

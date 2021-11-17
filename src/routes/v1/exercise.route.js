@@ -73,10 +73,10 @@ module.exports = router;
  *     summary: Get all Exercise
  *     description: Authorized users retrieve exercise.
  *     tags: [Exercise]
- *      security:
+ *     security:
  *       - bearerAuth: []
  *     parameters:
- *          - in: query
+ *       - in: query
  *         name: lessonId
  *         schema:
  *           type: string
@@ -92,7 +92,7 @@ module.exports = router;
  *           type: integer
  *           minimum: 1
  *         default: 10
- *         description: Maximum number of News
+ *         description: Maximum number of Exercise
  *       - in: query
  *         name: page
  *         schema:
@@ -145,14 +145,23 @@ module.exports = router;
  *         required: true
  *         schema:
  *           type: string
- *         description: News id
+ *         description: Exercise id
  *     responses:
  *       "200":
  *         description: OK
  *         content:
  *           application/json:
  *             schema:
- *                $ref: '#/components/schemas/Exercise'
+ *                type: object
+ *                properties:
+ *                  title:
+ *                     type: string
+ *                  lessonId:
+ *                     type: string
+ *                  questionList:
+ *                     type: array
+ *                     items:
+ *                       $ref: '#/components/schemas/QuestionExam'
  *       "403":
  *         $ref: '#/components/responses/Forbidden'
  *       "404":
@@ -170,7 +179,7 @@ module.exports = router;
  *         required: true
  *         schema:
  *           type: string
- *         description: News id
+ *         description: Exercise id
  *     requestBody:
  *       required: true
  *       content:
@@ -228,8 +237,8 @@ module.exports = router;
  *         $ref: '#/components/responses/NotFound'
  */
  
- /**
- *  @swagger
+/**
+ * @swagger
  * /exercise/calculate/{id}:
  * patch:
  *     summary: Calculate score of a exercise
@@ -245,34 +254,16 @@ module.exports = router;
  *           type: string
  *         description: exercise id
  *     requestBody:
- *       required: true
  *       content:
- *        content:
- *         application/json:
- *           schema:
- *             type: object
- *             required:
- *               - questions
- *             properties:
- *               questions:
- *                 type: array
- *                  items :
- *                      questionId:
- *                          type: string
- *                      answer: 
- *                          type: string
+ *          application/json:
+ *          schema:      # Request body contents
+ *           type: object
+ *            properties:
+ *              id:
+ *                type: integer
+ *              name:
+ *                type: string
  *     responses:
- *       "200":
- *         description: OK
- *         content:
- *           application/json:
- *             schema:
- *                type: object
- *                properties:
- *                  exerciseId:
- *                      type: string
- *                  score:
- *                      type: number
  *       "401":
  *         $ref: '#/components/responses/Unauthorized'
  *       "403":

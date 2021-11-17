@@ -33,6 +33,8 @@ module.exports = router;
  *     summary: Create a News
  *     description: Only admins can create other News.
  *     tags: [News]
+ *     security:
+ *       - bearerAuth: []
  *     requestBody:
  *       required: true
  *       content:

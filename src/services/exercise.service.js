@@ -48,7 +48,7 @@ const queryExercise = async (filter, options) => {
  * @returns {Promise<QueryResult>}
  */
  const queryQuestions = async (questionIds) => {
-    const questionList = await QuestionExam.find({_id : {$in : questionIds}}, { answer:0 });
+    const questionList = await QuestionExam.find({_id : {$in : questionIds}});
     return questionList;
 };
 
