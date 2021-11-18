@@ -277,7 +277,7 @@ const deleteLessonById = async (lessonId) => {
  * Get all study levels
  * @returns {Promise<QueryResult>}
  */
-const getStudyLevels = async (userId) => {
+const getStudyLevels = async () => {
     const blocks = await queryBlock();
 
     let blockIds = blocks.map(obj => {

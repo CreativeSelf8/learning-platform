@@ -25,7 +25,7 @@ const createLesson = catchAsync(async (req, res) => {
 });
 
 const getStudyLevels = catchAsync(async (req, res) => {
-    const result = await learningService.getStudyLevels(req.user._id);
+    const result = await learningService.getStudyLevels();
     res.send(result);
 });
 
