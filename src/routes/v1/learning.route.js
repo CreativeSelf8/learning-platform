@@ -8,7 +8,7 @@ const router = express.Router();
 
 router
     .route('/levels')
-    .get(auth(), learningController.getStudyLevels);
+    .get(learningController.getStudyLevels);
 
 router
     .route('/block/:blockId')
