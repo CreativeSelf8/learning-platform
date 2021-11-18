@@ -25,6 +25,9 @@ const getUser = catchAsync(async (req, res) => {
 });
 
 const updateUser = catchAsync(async (req, res) => {
+  if (req.params.userId !== req.user._id && req.user.role !== 'admin') {
+    throw new ApiError(httpStatus.UNAUTHORIZED, 'Not granted permission');
+  }
   const user = await userService.updateUserById(req.params.userId, req.body);
   res.send(user);
 });

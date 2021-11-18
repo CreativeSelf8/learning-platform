@@ -14,7 +14,7 @@ router
 router
   .route('/info/:userId')
   .get(auth('manageAdmin'), validate(userValidation.getUser), userController.getUser)
-  .patch(auth('manageAdmin'), validate(userValidation.updateUser), userController.updateUser)
+  .patch(auth(), validate(userValidation.updateUser), userController.updateUser)
   .delete(auth('manageAdmin'), validate(userValidation.deleteUser), userController.deleteUser);
 
 router
