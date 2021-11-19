@@ -114,10 +114,6 @@ components:
           type: string
         lessonId:
           type: string
-        url:
-          type: string
-        description:
-          type: string
     
     News:
       type: object
