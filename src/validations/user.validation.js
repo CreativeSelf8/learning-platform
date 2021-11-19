@@ -68,6 +68,14 @@ const updateUser = {
   body: Joi.object()
     .keys({
       name: Joi.string(),
+      email: Joi.string(),
+      birth: Joi.string(),
+      province: Joi.string(),
+      district: Joi.string(),
+      commune: Joi.string(),
+      address: Joi.string(),
+      age: Joi.number(),
+      gender: Joi.string(),
     })
     .min(1),
 };
@@ -75,6 +83,12 @@ const updateUser = {
 const deleteUser = {
   params: Joi.object().keys({
     userId: Joi.string().custom(objectId),
+  }),
+};
+
+const deleteRequest = {
+  params: Joi.object().keys({
+    requestId: Joi.string().custom(objectId),
   }),
 };
 
@@ -98,5 +112,6 @@ module.exports = {
   deleteUser,
   changePassword,
   requestUser,
-  acceptRequest
+  acceptRequest,
+  deleteRequest
 };

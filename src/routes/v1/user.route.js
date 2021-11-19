@@ -26,6 +26,10 @@ router
   .get(auth('manageAdmin'), userController.getListRequest)
   .post(auth('manageAdmin'), validate(userValidation.acceptRequest), userController.acceptRequest);
 
+router
+  .route('/request/:requestId')
+  .delete(auth('manageAdmin'), validate(userValidation.deleteRequest), userController.deleteRequest);
+
 module.exports = router;
 
 /**
@@ -324,9 +328,6 @@ module.exports = router;
  *             properties:
  *               name:
  *                 type: string
- *               phone:
- *                 type: string
- *                 description: must be unique
  *               birth:
  *                 type: string
  *               province:
@@ -372,6 +373,33 @@ module.exports = router;
  *         schema:
  *           type: string
  *         description: User id
+ *     responses:
+ *       "200":
+ *         description: No content
+ *       "401":
+ *         $ref: '#/components/responses/Unauthorized'
+ *       "403":
+ *         $ref: '#/components/responses/Forbidden'
+ *       "404":
+ *         $ref: '#/components/responses/NotFound'
+ */
+
+/**
+ * @swagger
+ * /request/{id}:
+ *   delete:
+ *     summary: Delete a request
+ *     description: Only admin can do this
+ *     tags: [Users]
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: Request id
  *     responses:
  *       "200":
  *         description: No content

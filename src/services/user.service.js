@@ -19,7 +19,7 @@ const requestUser = async (userBody) => {
   if (await User.isPhoneTaken(userBody.phone)) {
     throw new ApiError(httpStatus.BAD_REQUEST, 'Phone already taken');
   }
-  await UserRequest.deleteMany({phone: userBody.phone});
+  await UserRequest.deleteMany({ phone: userBody.phone });
   return UserRequest.create(userBody);
 };
 
@@ -27,7 +27,7 @@ const acceptRequest = async (body) => {
   if (await User.isPhoneTaken(body.phone)) {
     throw new ApiError(httpStatus.BAD_REQUEST, 'Phone already taken');
   }
-  await UserRequest.deleteOne({_id: body.requestId});
+  await UserRequest.deleteOne({ _id: body.requestId });
   const user = {};
   Object.assign(user, body);
   user.role = 'user';
@@ -57,7 +57,7 @@ const queryUsers = async (filter, options) => {
  * @param {number} [options.page] - Current page (default = 1)
  * @returns {Promise<QueryResult>}
  */
- const getListRequest = async (filter, options) => {
+const getListRequest = async (filter, options) => {
   const requests = await UserRequest.paginate(filter, options);
   return requests;
 };
@@ -113,6 +113,20 @@ const deleteUserById = async (userId) => {
   return user;
 };
 
+/**
+ * Delete Request by id
+ * @param {ObjectId} userId
+ * @returns {Promise<User>}
+ */
+const deleteRequestById = async (requestId) => {
+  const request = await UserRequest.findById(requestId);
+  if (!request) {
+    throw new ApiError(httpStatus.NOT_FOUND, 'request not found');
+  }
+  await request.remove();
+  return request;
+};
+
 const changePassword = async (oldPassword, newPassword, userId) => {
   try {
     const user = await userService.getUserById(userId);
@@ -142,5 +156,6 @@ module.exports = {
   changePassword,
   requestUser,
   acceptRequest,
-  getListRequest
+  getListRequest,
+  deleteRequestById
 };

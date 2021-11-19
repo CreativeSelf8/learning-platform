@@ -130,5 +130,5 @@ module.exports = {
     createBlock,
     createClass,
     createLecture,
-    createLesson
+    createLesson,
 };

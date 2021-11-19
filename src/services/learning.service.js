@@ -9,6 +9,10 @@ const { roles } = require('../config/roles');
  * @returns {Promise<Class>}
  */
 const createClass = async (classBody) => {
+    const block = await Block.findById(classBody.blockId);
+    if (!block) {
+        throw new ApiError(httpStatus.NOT_FOUND, 'block not found');
+    }
     return Class.create(classBody);
 };
 
@@ -27,8 +31,16 @@ const createBlock = async (blockBody) => {
  * @returns {Promise<Lecture>}
  */
 const createLecture = async (lectureBody) => {
+    const classData = await Class.findById(lectureBody.classId);
+    if (!classData) {
+        throw new ApiError(httpStatus.NOT_FOUND, 'Class not found');
+    }
     return Lecture.create(lectureBody);
 };
+
+function randomInRange(min, max) {
+    return Math.random() < 0.5 ? ((1 - Math.random()) * (max - min) + min) : (Math.random() * (max - min) + min);
+}
 
 /**
  * Create a lesson
@@ -36,6 +48,12 @@ const createLecture = async (lectureBody) => {
  * @returns {Promise<Lesson>}
  */
 const createLesson = async (lessonBody) => {
+    const lecture = await Lecture.findById(lessonBody.lectureId);
+    if (!lecture) {
+        throw new ApiError(httpStatus.NOT_FOUND, 'Lecture not found');
+    }
+    lessonBody.rating = randomInRange(4, 5);
+
     return Lesson.create(lessonBody);
 };
 
@@ -103,7 +121,7 @@ const queryLesson = async (lectureId) => {
  * @param {number} [options.page] - Current page (default = 1)
  * @returns {Promise<QueryResult>}
  */
- const queryBlocks = async (filter, options) => {
+const queryBlocks = async (filter, options) => {
     const blockList = await Block.paginate(filter, options);
     return blockList;
 };
@@ -117,7 +135,7 @@ const queryLesson = async (lectureId) => {
  * @param {number} [options.page] - Current page (default = 1)
  * @returns {Promise<QueryResult>}
  */
- const queryClasses = async (filter, options) => {
+const queryClasses = async (filter, options) => {
     const classList = await Class.paginate(filter, options);
     return classList;
 };
@@ -131,7 +149,7 @@ const queryLesson = async (lectureId) => {
  * @param {number} [options.page] - Current page (default = 1)
  * @returns {Promise<QueryResult>}
  */
- const queryLectures = async (filter, options) => {
+const queryLectures = async (filter, options) => {
     console.log(filter);
     const lectureList = await Lecture.paginate(filter, options);
     return lectureList;
@@ -146,7 +164,7 @@ const queryLesson = async (lectureId) => {
  * @param {number} [options.page] - Current page (default = 1)
  * @returns {Promise<QueryResult>}
  */
- const queryLessons = async (filter, options) => {
+const queryLessons = async (filter, options) => {
     const lessonList = await Lesson.paginate(filter, options);
     return lessonList;
 };

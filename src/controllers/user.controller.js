@@ -25,9 +25,9 @@ const getUser = catchAsync(async (req, res) => {
 });
 
 const updateUser = catchAsync(async (req, res) => {
-  if (req.params.userId !== req.user._id && req.user.role !== 'admin') {
-    throw new ApiError(httpStatus.UNAUTHORIZED, 'Not granted permission');
-  }
+  // if (req.params.userId !== req.user._id && req.user.role !== 'admin') {
+  //   throw new ApiError(httpStatus.UNAUTHORIZED, 'Not granted permission');
+  // }
   const user = await userService.updateUserById(req.params.userId, req.body);
   res.send(user);
 });
@@ -37,6 +37,10 @@ const deleteUser = catchAsync(async (req, res) => {
   res.status(httpStatus.NO_CONTENT).send();
 });
 
+const deleteRequest = catchAsync(async (req, res) => {
+  await userService.deleteRequestById(req.params.userId);
+  res.status(httpStatus.NO_CONTENT).send();
+});
 
 const changePassword = catchAsync(async (req, res) => {
   await userService.changePassword(req.body.oldPassword, req.body.newPassword, req.params.userId);
@@ -64,5 +68,6 @@ module.exports = {
   deleteUser,
   changePassword,
   getListRequest,
-  acceptRequest
+  acceptRequest,
+  deleteRequest
 };

@@ -38,7 +38,7 @@ router
 
 router
     .route('/lecture/')
-    .get(auth(), learningController.getListLecture)
+    .get(auth(),learningController.getListLecture)
     .post(auth('manageAdmin'), validate(learningValidation.createLecture), learningController.createLecture)
 
 router
