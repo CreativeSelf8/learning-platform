@@ -17,7 +17,7 @@ router
 
 router
     .route('/block/')
-    .get(auth(), learningController.getListBlock)
+    .get(learningController.getListBlock)
     .post(auth('manageAdmin'), validate(learningValidation.createBlock), learningController.createBlock);
 
 router
@@ -27,7 +27,7 @@ router
 
 router
     .route('/class/')
-    .get(auth(), learningController.getListClass)
+    .get(learningController.getListClass)
     .post(auth('manageAdmin'), validate(learningValidation.createClass), learningController.createClass)
 
 router
@@ -38,7 +38,7 @@ router
 
 router
     .route('/lecture/')
-    .get(auth(),learningController.getListLecture)
+    .get(learningController.getListLecture)
     .post(auth('manageAdmin'), validate(learningValidation.createLecture), learningController.createLecture)
 
 router
