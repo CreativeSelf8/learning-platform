@@ -487,6 +487,8 @@ module.exports = router;
  *                 type: string
  *               classId:
  *                 type: string
+ *               description:
+ *                 type: string
  *     responses:
  *       "201":
  *         description: Created
@@ -537,6 +539,8 @@ module.exports = router;
  *               thumbnail:
  *                 type: string
  *               classId:
+ *                 type: string
+ *               description:
  *                 type: string
  *     responses:
  *       "200":

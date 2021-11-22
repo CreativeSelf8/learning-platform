@@ -8,6 +8,7 @@ let LectureSchema = new Schema({
   classId: { type: String, required: true },
   lessonIds: { type: [String], required: true },
   order: { type: Number, required: true },
+  description: { type: String},
   created_at: Date,
   updated_at: Date
 });

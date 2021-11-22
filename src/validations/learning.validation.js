@@ -22,6 +22,7 @@ const createLecture = {
         thumbnail: Joi.string().required(),
         order: Joi.number().required(),
         classId: Joi.string().custom(objectId).required(),
+        description: Joi.string()
     }),
 };
 
@@ -69,6 +70,7 @@ const updateLecture = {
             thumbnail: Joi.string().required(),
             order: Joi.number().required(),
             classId: Joi.string().custom(objectId).required(),
+            description: Joi.string()
         })
         .min(1),
 };
