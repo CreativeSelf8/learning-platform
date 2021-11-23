@@ -50,10 +50,8 @@ const queryExercise = async (filter, options) => {
     Object.assign(result, exerciseData);
     result.results.map(function (element) {
         element.questionList = questionArray.filter(e => element.questionIds.includes(e._id.toString()));
-        console.log(element);
         return element;
     })
-    console.log(result);
 
     return result;
 };

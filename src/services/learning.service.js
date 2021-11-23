@@ -150,7 +150,6 @@ const queryClasses = async (filter, options) => {
  * @returns {Promise<QueryResult>}
  */
 const queryLectures = async (filter, options) => {
-    console.log(filter);
     const lectureList = await Lecture.paginate(filter, options);
     return lectureList;
 };
@@ -317,7 +316,6 @@ const getStudyLevels = async () => {
         }
         classes.filter(e => e.blockId == element._id.toString())
             .sort((a, b) => (a.order > b.order) ? 1 : -1).forEach(classElement => {
-                console.log(classElement);
                 var classItem = {
                     id: classElement._id,
                     classTitle: classElement.title,
