@@ -8,6 +8,7 @@ let LessonSchema = new Schema({
   description: { type: String},
   rating: { type: Number},
   order: { type: Number, required: true },
+  lectureId: { type: String, required: true },
   created_at: Date,
   updated_at: Date
 });
