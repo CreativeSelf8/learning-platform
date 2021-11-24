@@ -84,7 +84,8 @@ const updateLesson = {
             title: Joi.string().required(),
             order: Joi.number().required(),
             url: Joi.string().required(),
-            description: Joi.string().required()
+            description: Joi.string().required(),
+            lessonId: Joi.custom(objectId)
         })
         .min(1),
 };
