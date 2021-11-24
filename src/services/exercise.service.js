@@ -1,4 +1,5 @@
 const httpStatus = require('http-status');
+const { get } = require('mongoose');
 const { QuestionExam, Exercise, ExerciseHistory, Lesson } = require('../models');
 const ApiError = require('../utils/ApiError');
 
@@ -79,10 +80,10 @@ const getExerciseById = async (id) => {
  * Update Exercise by id
  * @param {ObjectId} exerciseId
  * @param {Object} updateBody
- * @returns {Promise<News>}
+ * @returns {Promise<Exercise>}
  */
 const updateExerciseById = async (exerciseId, updateBody) => {
-    const exercise = await getNewsById(exerciseId);
+    const exercise = await getExerciseById(exerciseId);
     if (!exercise) {
         throw new ApiError(httpStatus.NOT_FOUND, 'Exercise not found');
     }
@@ -95,7 +96,7 @@ const updateExerciseById = async (exerciseId, updateBody) => {
 };
 
 /**
- * Delete news by id
+ * Delete exercise by id
  * @param {ObjectId} exerciseId
  * @returns {Promise<Exercise>}
  */
