@@ -37,7 +37,7 @@ const createLesson = {
 
 const updateBlock = {
     params: Joi.object().keys({
-        newsId: Joi.required().custom(objectId),
+        blockId: Joi.required().custom(objectId),
     }),
     body: Joi.object()
         .keys({
@@ -49,7 +49,7 @@ const updateBlock = {
 
 const updateClass = {
     params: Joi.object().keys({
-        newsId: Joi.required().custom(objectId),
+        classId: Joi.required().custom(objectId),
     }),
     body: Joi.object()
         .keys({
@@ -62,7 +62,7 @@ const updateClass = {
 
 const updateLecture = {
     params: Joi.object().keys({
-        newsId: Joi.required().custom(objectId),
+        lectureId: Joi.required().custom(objectId),
     }),
     body: Joi.object()
         .keys({
@@ -77,7 +77,7 @@ const updateLecture = {
 
 const updateLesson = {
     params: Joi.object().keys({
-        newsId: Joi.required().custom(objectId),
+        lessonId: Joi.required().custom(objectId),
     }),
     body: Joi.object()
         .keys({
