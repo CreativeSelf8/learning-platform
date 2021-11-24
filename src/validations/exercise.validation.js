@@ -44,6 +44,7 @@ const updateExercise = {
                 answer: Joi.string().required(),
                 multiChoices: Joi.required(),
                 order: Joi.required(),
+                description: Joi.string()
             }))
         })
         .min(1),
