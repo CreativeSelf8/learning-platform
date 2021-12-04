@@ -32,6 +32,7 @@ const createLesson = {
         url: Joi.string().required(),
         order: Joi.number().required(),
         lectureId: Joi.string().custom(objectId).required(),
+        description: Joi.string()
     }),
 };
 
@@ -84,7 +85,7 @@ const updateLesson = {
             title: Joi.string().required(),
             order: Joi.number().required(),
             url: Joi.string().required(),
-            description: Joi.string().required(),
+            description: Joi.string(),
             lectureId: Joi.custom(objectId)
         })
         .min(1),
