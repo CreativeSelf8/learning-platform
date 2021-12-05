@@ -22,7 +22,7 @@ const createLecture = {
         thumbnail: Joi.string().required(),
         order: Joi.number().required(),
         classId: Joi.string().custom(objectId).required(),
-        description: Joi.string()
+        description: Joi.string().empty()
     }),
 };
 
@@ -32,7 +32,7 @@ const createLesson = {
         url: Joi.string().required(),
         order: Joi.number().required(),
         lectureId: Joi.string().custom(objectId).required(),
-        description: Joi.string()
+        description: Joi.string().empty()
     }),
 };
 
@@ -71,7 +71,7 @@ const updateLecture = {
             thumbnail: Joi.string().required(),
             order: Joi.number().required(),
             classId: Joi.string().custom(objectId).required(),
-            description: Joi.string()
+            description: Joi.string().empty()
         })
         .min(1),
 };
@@ -85,7 +85,7 @@ const updateLesson = {
             title: Joi.string().required(),
             order: Joi.number().required(),
             url: Joi.string().required(),
-            description: Joi.string(),
+            description: Joi.string().empty(),
             lectureId: Joi.custom(objectId)
         })
         .min(1),
